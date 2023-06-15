@@ -1,0 +1,150 @@
+﻿@model web.Models.LoginModel
+
+@{
+    ViewData["Title"] = "Sign in";
+}
+
+<link href="../css/home/login.css" rel="stylesheet" type="text/css" />
+
+<div class="wrapper">
+    <div class="logo">
+        <img src="../images/login-icon.png" alt="">
+    </div>
+    <div class="text-center mt-4 name">
+        El Surv
+    </div>
+    <form method="post" class="p-3 mt-3">
+        <div class="form-field d-flex align-items-center">
+            <span class="far fa-user"></span>
+            <input type="text" name="login" id="login" placeholder="login">
+            <div>
+                <span asp-validation-for="Login" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-field d-flex align-items-center">
+            <span class="fas fa-key"></span>
+            <input type="password" name="password" id="pwd" placeholder="password">
+            <div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div id="pb1" class="progress m-3" role="progressbar" aria-label="with label" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+            <div id="pb2" class="progress-bar" style="width: 0%"></div>
+        </div>
+
+        <div>
+            <input type="submit" id="loginBtn" class="btn mt-3" value="Login" />
+        </div>
+    </form>
+    @if (Model.loginFailed)
+    {
+        <h6 class="text-center text-danger">Login/Password failed</h6>        
+    }
+    <div class="text-center fs-6">        
+        <a href="#">Система проведения электронных опросов</a>
+    </div>    
+</div>
+
+
+
+@section Scripts
+    {
+    <script>
+        $(document).ready(function () {
+            $("#pb1").hide();
+        });
+        var i = 0;
+        $("#loginBtn").click(function () {
+            $("#pb1").show();
+            var interval = setInterval(() => {
+                i += 5;
+                if (i >= 100) {
+                    clearInterval(interval);
+                }
+                $("#pb2").width(i + '%');
+                $("#pb2").html(i + '%');
+            }, 50)
+        });
+    </script>
+}
+
+
+@*
+ <div class="container">
+    <h3>Sign In</h3>
+    <form method="post">
+        <div>
+            <label>User Name:</label><br />
+            <input type="text" name="login" />
+           
+            <div>
+                <span asp-validation-for="Login" class="text-danger"></span>
+            </div>            
+            
+        </div>
+        <div>
+            <label>Password:</label><br />
+            <input type="password" name="password" />
+            
+            <div>
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            
+        </div>
+        <div>
+            <input type="submit" value="Send" />
+        </div>
+    </form>
+    
+    @if (ViewBag.LoginStatus == 0)
+    {
+        <p>
+            <h6>Login/Password failed</h6>
+        </p>
+    }
+    
+</div>
+*@
+
+
+
+
+
+@*
+<h2>@ViewData["Title"]</h2>
+<div class="row">
+    <div class="col-md-3">
+        <form method="post">
+            <p>Sign into the app with the <b>email</b> address and <b>password</b>.</p>
+            <hr>
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Login"></label>
+                <input asp-for="Login" class="form-control">
+                <span asp-validation-for="Login" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password"></label>
+                <input asp-for="Password" class="form-control">
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-default">Log in</button>
+            </div>
+        </form>
+    </div>
+</div>
+*@
+
+
+@*
+<div class="container">
+     <h3>Sign In</h3>
+    @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+    @Html.TextBoxFor(m => m.Login, new { @class = "form-control", @placeholder = "username" })
+    @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "password" })
+    <input type="submit" value="Login" class="btn float-right login_btn">
+</div>
+*@
+

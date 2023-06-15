@@ -1,0 +1,93 @@
+﻿@model List<web.Db.User>
+@{
+    ViewData["Title"] = "User list";
+    int count = 1;
+}
+
+
+<h2>List of Users</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                №
+            </th>
+
+            <th>
+                Логин
+            </th>
+
+            <th>
+                Имя
+            </th>
+            <th>
+                Отчество
+            </th>
+            <th>
+                e-mail
+            </th>
+            <th>
+                Контактный телефон
+            </th>
+            <th>
+                Дата рождения
+            </th>
+            <th>
+                Пол
+            </th>
+            <th colspan="2" class="text-center">
+                Действие
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>
+                    @count
+                </td>
+                <td>
+                    @user.login
+                </td>
+
+                <td>
+                    @user.name
+                </td>
+                <td>
+                    @user.surname
+                </td>
+
+                <td>
+                    @user.contactEmail
+                </td>
+
+                <td>
+                    @user.contactPhone
+                </td>
+
+                <td>
+                    @user.dateBirth
+                </td>
+
+                <td>
+                    @user.gender
+                </td>
+
+                <td>
+                    @Html.ActionLink("Удалить", "Delete", new { id = @user.id } )
+                </td>
+                <td>
+                    @Html.ActionLink("Редактировать", "Edit", new { id = @user.id })
+                </td>
+            </tr>
+            count++;
+        }
+    </tbody>
+</table>
+
+<td>
+    @Html.ActionLink("Добавить нового пользователя", "NewUser")
+</td>

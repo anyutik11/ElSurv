@@ -1,0 +1,54 @@
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;    
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+body {
+  margin-bottom: 60px; 
+}
+
+.demo-wrap {
+    position: relative;
+}
+
+.demo-wrap:before {
+    content: '';
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0.15;
+    background-image: url('/images/table1.jpg');
+    background-position: 50% 0;
+    background-size: cover;
+    z-index: -5000;
+}
+
+.navbar {
+    background-color: #dedb9da5 !important;
+}
+.navbar-brand {
+    font-weight: 600;
+}
+
+.form-control {    
+    background-color: #dedb9da5;
+}
+
+.card-header {
+    background-color: #74fdfaa5;
+}
+.card-body {
+    background-color: #ebeae0a5;
+}
+.card-footer {
+    background-color: #cdbaf4a5;
+}
+
+

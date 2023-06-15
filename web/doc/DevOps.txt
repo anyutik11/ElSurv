@@ -1,0 +1,9 @@
+﻿customerpulse.ru
+
+https://wpl37.hosting.reg.ru:8443
+ElSurv
+2fo1eF4df!Od39da9&R3j3vq
+
+Build/Publish
+Не архивировать: web.config, Logs/
+

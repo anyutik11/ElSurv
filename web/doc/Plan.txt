@@ -1,0 +1,170 @@
+﻿------------ Раздел: Администратор -----------------------
+[Александр]
++ смена пароля
++ блокировка пользователя
+
+[Александр]
+Ввод логина и пароля пользователя
+Login Page (анонимно)
+GET HomeController.Login
+POST HomeController.Login(login, pass)
+Если правильные, переход меню
+Если не правильные, повторный ввод
+
+[Александр]
+Menu Page
+Выбор: спиок опросов (для редактирования) или ответы по опросам (просмотр, аналитка), ответы по вопросам(просмотр, аналитика)
+AdminMenu Page
+- Список опросов
+  GET AdminReviewPageController.List()
+  вывод списка всех опросов
+
+- Ответы на опросы
+  GET AdminResultPageV2Controller.Answers(reviewId)
+  вывод ответов на опросы по id
+
+- Список всех вопросов
+  GET AdminResultPageV1Controller.ListOfAllQuestions()
+  вывод странички со всеми вопросами из опросов
+
+
+[Александр]
+(sysAdmin)
+SysAdmin Page 
+- список пользователей
+  SysAdminPageController.List()
+  вывод списка всех пользователей
+- удалить пользователя
+  SysAdminPageController.Delete()
+  удаление пользователя по id
+- добавить пользователя
+  SysAdminPageController.Add()  #not implemented yet
+- изменить пользователя
+  GET SysAdminPageController.Edit()
+  POST SysAdminPageController.Edit(user, userId)
+  изменение данных пользователя(дата рождения, имя, фамилия и тд) по айди
+
+
+[Влада]
+AdminSurvey Page (по компании, все администраторы)
+	Для авторизированных сотрудников компании, системный администратор просматривает все,
+	просто адинистраторы просматривают по компании
+- список опросов
+	Вывод всех опросов с выбором: удалить, редактировать
+	GET AdminReviewPageController.List(пользователь)
+- удалить опрос
+	Удаление опроса по его id
+	GET AdminReviewPageController.Delete(review_id)
+
+- добавить/редактировать опрос
+	1. Редактирование конкретного опроса, изменение вопросов
+	GET AdminReviewPageController.Edit(review_id)
+	POST AdminReviewPageController.Edit(review, review_id)
+
+	2. Создание и добавление нового опроса с 1-3 вопросами
+
+-- удалить вопрос(включено в редактирование)
+-- добавить/редактировать вопрос(включено в редактирование)
+
+- включить/отключить
+	Переключение колонки active: 1(включен) -> 0(отключен) и наоборот  
+
+[Влада]
+AdminResult Page (по компании, все администраторы)
+	Для авторизированных сотрудников компании, системный администратор просматривает все,
+	просто адинистраторы просматривают по компании
+- последние ответы
+	Вывод всех вопросов в таблицу с возможностью посмотреть ответы по каждому отдельному вопросу
+	GET AdminResultPageV1Controller.ListOfAllQuestions(review_id)
+- все ответы по выбранному опросу
+	Вывод всех опросов в таблицу с возможностью просмотреть все ответы по опросу 
+	GET AdminResultPageV2Controller.ListOfAllQuestions(review_id)
+	GET AdminResultPageV2Controller.Answers(review_id)
+
+	При переходе на страницу ответов, можно увидеть описание конкретного опроса и отредактировать его
+	GET AdminResultPageV2Controller.Edit(review_id)
+	POST AdminResultPageV2Controller.Edit(review_id)
+------------ Раздел: Гости ----------------------
+
+[Влада]
+Survey Page (по компании, анонимно)
+- выбрать заведение
+
+- выбрать опрос
+	Вывод списка доступных опросов по компании с возмоджностью пройти конкретный опрос
+	GET ReviewAskController.Review 
+- пройти опрос
+	Переход на страницу конкретного опроса, где показаны вопросы и дана форма для ответа на каждый вопрос
+	GET ReviewAskController.Questions(review_id)
+	POST ReviewAskController.Questions(review_id)
+
+[Аня]
+Bonus Page
+
+BonusPageController
+- сколько бонусов
+GET BonusPageController.BonusList()
+  -- посмотреть доступные бонусы
+  
+- история начислений
+GET BonusPageController.BonusList(bonus_id)
+  -- вывод списка бонусов с возможностью просмотра конкретного (дня?)
+
+[Аня]
+Profile Page
+
+ProfilePageController
+- личные данные
+GET ProfilePageController.ProfileList()
+  -- просмотр личной страницы
+
+- редактировать личные данные
+GET ProfilePageController.Edit()
+POST ProfilePageController.Edit()
+
+- регистрация
+GET ProfilePageController.Login
+POST ProfilePageController.Login(login, pass)
+-- пароль и логин нужно занести в базу данных
+
+
+------------ Раздел: Mobile API ----------------
+
+[Аня]
+
+MobileAPIController
+
+- выбрать заведение
+GET MobileAPIController.RestList(rest_id)
+
+- выбрать опрос
+GET MobileAPIController.Review()
+
+- пройти опрос
+GET MobileAPIController.Questions(review_id)
+POST MobileAPIController.Questions(review_id)
+  -- Новая страница конкретного опроса (есть сами вопросы => заполнить форму как было в Survey Page)
+
+- сколько бонусов
+GET MobileAPIController.BonusList()
+- история начислений
+GET MobileAPIController.BonusList(bonus_id)
+  -- Просмотр конкретного бонуса
+
+- личные данные
+GET MobileAPIController.ProfileList()
+  -- просмотр личной страницы
+
+- регистрация
+GET MobileAPIController.Login
+POST MobileAPIController.Login(login, pass)
+  -- пароль и логин нужно занести в базу данных
+
+- сменить пароль
+GET MobileAPIController.ChangePass()
+POST MobileAPIController.ChangePass(pass_old, pass_new)
+
+
+
+Первичная инициализация БД:
+/home/init?key=jghfY8678fgGFc

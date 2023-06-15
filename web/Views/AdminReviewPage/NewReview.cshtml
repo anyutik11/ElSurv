@@ -1,0 +1,67 @@
+﻿@model web.Models.ReviewDto
+@{
+    ViewData["Title"] = "Ответьте на вопросы";
+}
+
+<div class="card">
+    <div class="card-header h4">Ответьте на вопросы</div>
+
+    @using (Html.BeginForm())
+    {
+
+        @*   <div class="item">
+    <label>@Model.key</label>
+
+    </div>
+    *@
+        <div class="card-body">
+            <div class="form-horizontal">
+
+                <div class="form-group my-4">
+                    <label>Вопрос 1</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.question1, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.question1, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group my-4">
+                    <label>Вопрос 2</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.question2, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.question2, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group my-4">
+                    <label>Вопрос 3</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.question3, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.question3, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group my-4">
+                    <label>Описание</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group my-4">
+                    <label>Ключ</label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.key, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.key, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer text-center">
+            <button type="submit" class="btn btn-primary my-4">
+                Save
+            </button>
+        </div>
+    }
+</div>
+<div>
+    @Html.ActionLink("Back to List", "List")
+</div>
+

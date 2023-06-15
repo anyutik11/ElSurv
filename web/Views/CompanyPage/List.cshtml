@@ -1,0 +1,140 @@
+﻿@model List<web.Db.Company>
+@{
+    ViewData["Title"] = "Companies";
+    int count = 1;
+}
+
+<div class="card">
+    <div class="card-header h4">Companies</div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="align-middle">
+                        #
+                    </th>
+                    <th class="align-middle">
+                        State
+                    </th>
+                    <th class="align-middle">
+                        Short name
+                    </th>
+
+                    <th class="align-middle">
+                        Full name
+                    </th>
+                    <th class="align-middle">
+                        Phone
+                    </th>
+                    <th class="align-middle">
+                        Email
+                    </th>                    
+                    <th colspan="4" class="align-middle text-center">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                                
+                @foreach (var company in Model)
+                {
+                    <tr>
+                        <td>
+                            @count
+                        </td>
+                        <td>
+                            @if (company.deleted)
+                            {
+                                <span class="text-danger">blocked</span>
+                            }
+                            else
+                            {
+                                <span>active</span>
+                            }
+                        </td>
+                        <td>
+                            @company.shortName
+                        </td>
+
+                        <td>
+                            @company.fullName
+                        </td>
+                        <td>
+                            <span>+7 (@company.contactPhone.Substring(0, 3)) @company.contactPhone.Substring(3, 3)-@company.contactPhone.Substring(6, 4) </span>
+                        </td>
+                        <td>
+                            @company.contactEmail
+                        </td>
+                        <td>
+                            @if (company.deleted)
+                            {
+                                @Html.ActionLink("Unblock", "Unblock", new { id = company.id })
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Block", "Block", new { id = company.id })
+                            }                            
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { companyId = company.id })
+                        </td>
+                        <td>
+                            @Html.ActionLink("Users", "List", "UserPage", new { companyId = company.id })
+                        </td>
+                        <td>
+                            <button type="button" data-id="@company.id" class="open-DelDialog btn btn-outline-danger btn-sm"
+                                data-bs-toggle="modal" data-bs-target="#modal1">Delete
+                            </button>
+                        </td>
+                    </tr>
+                    count++;
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer">
+        @Html.ActionLink("Add new company", "AddCompany")
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="modal1" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirm delete</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="text-center modal-body">
+                Delete the Company?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <a id="startBtn" class="btn btn-danger">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts
+{
+    <script>
+        $(document).on("click", ".open-DelDialog", function () {
+            var companyId = $(this).data('id');
+            console.log('Del company', companyId);
+            $("#startBtn").click(function () {
+                $("#modal1").modal('hide');
+                $.ajax({
+                    url: "Delete/"+companyId,
+                    type: 'GET',
+                    success: function (res) {
+                        window.location.href="List";                        
+                    }
+                });                
+            });
+        });
+    </script>
+}

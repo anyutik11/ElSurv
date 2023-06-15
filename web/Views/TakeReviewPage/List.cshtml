@@ -1,0 +1,60 @@
+﻿@model List<web.Models.ReviewDto>
+@{
+    ViewData["Title"] = "Take review";
+    int count = 1;
+}
+
+<div class="card">
+    <div class="card-header h4">Take review</div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="align-middle">
+                        #
+                    </th>
+                    <th class="align-middle">
+                        Description
+                    </th>
+                    <th class="align-middle">
+                        Company
+                    </th>
+                    <th class="align-middle">
+                        Key
+                    </th>                    
+                    <th class="align-middle">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var review in Model)
+                {
+                    <tr>
+                        <td>
+                            @count
+                        </td>
+                        <td>
+                            @review.description
+                        </td>
+                        <td>
+                            @review.companyName
+                        </td>
+                        <td>
+                            @review.key
+                        </td>
+                        <td>
+                            @Html.ActionLink("Take review", @review.key, "tr")
+                        </td>
+                    </tr>
+                    count++;
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer">
+        &nbsp;
+    </div>
+</div>
+

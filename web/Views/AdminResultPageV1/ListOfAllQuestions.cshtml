@@ -1,0 +1,58 @@
+﻿@model List<web.Db.Review>
+@{
+    ViewData["Title"] = "Вопросы";
+    int count = 1;
+}
+
+
+<h2>Ответы по каждому вопросу</h2>
+
+<table class="table table-bordered">
+
+    <tbody>
+
+        @foreach (var review in Model)
+        {
+            <tr>
+                <td>
+                    @count
+                </td>
+
+                <td>
+                    @review.question1
+                </td>
+                <td>
+                    @Html.ActionLink("Посмотреть ответы", "Answer1", new { id = @review.id })
+                </td>
+            </tr>
+            count++;
+            <tr>
+                <td>
+                    @count
+                </td>
+
+                <td>
+                    @review.question2
+                </td>
+                <td>
+                    @Html.ActionLink("Посмотреть ответы", "Answer2", new { id = @review.id })
+                </td>
+            </tr>
+            count++;
+            <tr>
+                <td>
+                    @count
+                </td>
+
+                <td>
+                    @review.question3
+                </td>
+                <td>
+                    @Html.ActionLink("Посмотреть ответы", "Answer3", new { id = @review.id })
+                </td>
+            </tr>
+            count++;
+
+        }
+    </tbody>
+</table>

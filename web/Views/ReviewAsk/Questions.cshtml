@@ -1,0 +1,873 @@
+﻿@model web.Models.ReviewAskDto
+@{
+    Layout = null;
+    ViewData["Title"] = "Review";
+}
+
+
+<!DOCTYPE html>
+<html lang="en" id="htmlTop">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ElSurv</title>
+
+    <link href="~/lib/bootstrap/dist/bootstrap4.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
+    <style type="text/css">
+        body {
+            font-family: Verdana,sans-serif;
+        }
+
+        .text-corporate {
+            color: #4a049c;
+        }
+
+        .bg-corporate {
+            background-color: #4a049c;
+        }
+
+        body .els-background {
+            top: 0;
+            bottom: 0;
+            left: 0;
+            position: fixed;
+            opacity: 0.7;
+            object-fit: cover;
+            z-index: if;
+        }
+
+        .els-animate05s, .qr-animate05s {
+            -webkit-transition-duration: 0.5s;
+            -moz-transition-duration: 0.5s;
+            -o-transition-duration: 0.5s;
+            transition-duration: 0.5s;
+        }
+
+        .els-animate1s, .qr-animate1s {
+            -webkit-transition-duration: 1s;
+            -moz-transition-duration: 1s;
+            -o-transition-duration: 1s;
+            transition-duration: 1s;
+        }
+
+        .els-animate15s, .qr-animate15s {
+            -webkit-transition-duration: 1.5s;
+            -moz-transition-duration: 1.5s;
+            -o-transition-duration: 1.5s;
+            transition-duration: 1.5s;
+        }
+
+        .els-animate05s, .els-animate1s, .els-animate15s,
+        .qr-animate05s, .qr-animate1s, .qr-animate15s {
+            -webkit-transition-property: background-color, color, margin-top;
+            -moz-transition-property: background-color, color, margin-top;
+            -o-transition-property: background-color, color, margin-top;
+            transition-property: background-color, color, margin-top;
+            -webkit-transition-timing-function: ease;
+            -moz-transition-timing-function: ease;
+            -o-transition-timing-function: ease;
+            transition-timing-function: ease;
+        }
+
+        .elsurv-question-complete.els-animate15s,
+        .elsurv-question-complete.els-animate1s,
+        .elsurv-question-complete.qr-animate15s,
+        .elsurv-question-complete.qr-animate1s {
+            -webkit-transition-duration: 0s;
+            -moz-transition-duration: 0s;
+            -o-transition-duration: 0s;
+            transition-duration: 0s;
+        }
+
+        .els-border-round {
+            border-radius: 10px;
+        }
+
+        .els-border {
+            border-style: solid;
+            border-width: 2px;
+            border-color: transparent;
+        }
+
+        .els-circle {
+            color: white;
+            font-weight: bold;
+            font-size: 11px;
+            border-radius: 9px;
+            padding-left: 6px;
+            padding-right: 6px;
+        }
+
+        .els-card {
+            box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        }
+
+            .els-card.hover:hover {
+                box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+            }
+
+        .partHeader {
+        }
+
+        .partFooter {
+        }
+
+        .partHeader a, .partHeader a:hover {
+            color: Theme?.footer?.color
+        }
+
+        .partFooter a, .partFooter a:hover {
+            color: Theme?.footer?.color
+        }
+
+        .partContainer {
+        }
+
+        .partPrepare {
+            background-color: rgba(0, 0, 120, 0.6);
+            color: #ffc107;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .partError {
+            background-color: rgba(200, 40, 40, 0.8);
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .partWelcome {
+            padding-top: 10px;
+        }
+
+        .partSend {
+            background-color: rgba(0, 0, 120, 0.6);
+            color: #ffc107;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .partThanks {
+            padding: 20px;
+        }
+
+        .elsurv-questions {
+            padding: 10px 5px 10px 5px;
+        }
+
+        .elsurv-question {
+            padding: 0px 5px 0px 5px;
+        }
+
+        .elsurv-question-active {
+            padding: 5px 5px 0px 5px;
+        }
+
+        .elsurv-question-answer {
+            padding-top: 10px;
+            padding-bottom: 5px;
+        }
+
+            .elsurv-question-answer .elsurv-question-radio {
+                line-height: normal;
+            }
+
+        .els-border.elsurv-question-noactive,
+        .els-border.elsurv-question-complete {
+            border-color: transparent;
+        }
+
+        .els-border.elsurv-question-active {
+            background-color: rgba(255,255,255,1);
+        }
+
+        .els-border.elsurv-question-active {
+            border-color: #4a049c;
+        }
+
+        .els-border.elsurv-question-active {
+            color: black;
+        }
+
+        .elsurv-question-noactive .elsurv-question-no.els-circle {
+            background-color: rgb(160,160,160);
+            font-size: 10px;
+            border-radius: 10px;
+            padding-top: 2px;
+            height: 20px;
+            width: 20px;
+            text-align: center;
+            text-align: center;
+        }
+
+        .elsurv-question-complete .elsurv-question-no.els-circle {
+            background-color: #1b5e20;
+            font-size: 10px;
+            border-radius: 10px;
+            padding-top: 2px;
+            height: 20px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .elsurv-question-answered-text, .elsurv-question-answered-check {
+            color: #1b5e20;
+        }
+
+        .elsurv-question-active .elsurv-question-no.els-circle {
+            background-color: #4a049c;
+            font-size: 16px;
+            border-radius: 17px;
+            padding-top: 4px;
+            height: 34px;
+            width: 34px;
+            text-align: center;
+        }
+
+        .elsurv-question-noactive .elsurv-question-answer,
+        .elsurv-question-noactive .elsurv-question-skip {
+            display: none !important;
+        }
+
+        .elsurv-question-active .elsurv-question-answered,
+        .elsurv-question-noactive .elsurv-question-answered,
+        .elsurv-question-complete .elsurv-question-answer,
+        .elsurv-question-complete .elsurv-question-skip {
+            display: none !important;
+        }
+
+        .elsurv-question-noactive .elsurv-question-text,
+        .elsurv-question-complete .elsurv-question-text {
+            font-size: small;
+            color: gray;
+        }
+
+        .elsurv-question-active .elsurv-question-text {
+            font-weight: bold;
+        }
+
+        .els-check {
+            border: 1px solid transparent;
+            border-radius: 20px;
+            padding-left: 15px;
+            padding-right: 10px;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            min-height: 40px;
+            width: 100%;
+        }
+
+            .els-check:hover {
+                border-color: grey;
+            }
+
+        .form-control:focus, .form-control-sm:focus {
+            border-color: #4a049c;
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 3px #4a049c;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 3px #4a049c;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .text-orange {
+            color: orange;
+        }
+
+        .font-size-10 {
+            font-size: 10px;
+        }
+
+        .font-size-12 {
+            font-size: 12px;
+        }
+
+        .font-size-18 {
+            font-size: 18px;
+        }
+
+        .font-size-24 {
+            font-size: 24px;
+        }
+
+        .qr-btn {
+            background-color: rgb(245,245,245);
+            border: 1px solid rgb(208, 208, 208);
+            color: rgb(141, 139, 139);
+            min-height: 40px;
+            border-radius: 20px;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+            .qr-btn:hover[disabled] {
+                background-color: gray;
+                cursor: not-allowed;
+            }
+
+        .qr-btn-filled:hover, .qr-btn-filled.clicked {
+            color: white;
+            background-color: #4a049c;
+            border-color: #4a049c;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .qr-btn-bordered:hover, .qr-btn-bordered.clicked {
+            color: #4a049c;
+            border-color: #4a049c;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .qr-border-round {
+            border-radius: 15px;
+        }
+
+        .qr-border {
+            border-style: solid;
+            border-width: 2px;
+            border-color: transparent;
+        }
+
+            .qr-border.elsurv-question-noactive,
+            .qr-border.elsurv-question-complete {
+                border-color: transparent;
+            }
+
+        .elsurv-question-active {
+            background-color: rgba(255,255,255,1);
+        }
+
+        .qr-border.elsurv-question-active {
+            border-color: #4a049c;
+        }
+
+        .qr-shadow {
+            box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12)
+        }
+                
+    </style>
+
+    <style type="text/css">
+        body .els-background {
+            opacity: 0.3;
+        }
+
+        .partSurvey, .partFeedback {
+            border-radius: 20px;
+        }
+
+        .partHeader {
+            border-radius: 20px;
+            padding-left: 40px;
+        }
+
+        .partFooter {
+            border-radius: 10px;
+        }
+
+        /*
+        #bp-web-widget-container {
+            max-height: 200px !important;
+            height: 200px !important;            
+        }
+        */
+                
+    </style>
+</head>
+
+<body style="background-color:whitesmoke; color:text-muted;">
+
+    <img id="backgroundUrl" class='els-background' width="100%" height="100%" src='/images/review_background.jpg' />
+    <header>
+        <div id="partHeader" class="nav fixed-top partHeader" style="height:90px;; background-color:#4a049c;; color:whitesmoke;">
+            <table style="width:100%;height:90px;">
+                <tr>
+                    <td width="100%">
+                        <div class="text-left pl-3">
+                            <div class="font-size-24 font-weight-bold">@Model.companyName</div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="align-items-center font-size-10 text-center pr-4" style="color:yellow">
+                            ElSurv System
+                        </div>
+                    </td>
+
+                </tr>
+            </table>
+        </div>
+    </header>
+
+    <div id="partLoader" class="partLoader container-fluid">
+        <div class="row align-items-center" style="height:100vh;">
+            <div id="partPrepare" class="partPrepare col-12">
+                <i class="fa fa-2x fa-spin fa-spinner"></i> prepare data...
+            </div>
+            <div id="partError" class="partError col-12 animated fadeIn" style="display:none;">
+                <i class="fa fa-2x fa-exclamation-circle"></i><br /><span id="partErrorText">Invalid review</span>
+            </div>
+        </div>
+    </div>
+    <div id="partContainer" class="partContainer container p-0" style="margin-top:90px; margin-bottom:28px;">
+        <div class="row no-gutters" style="height:10px;"></div>
+        <div id="partMain" class='row justify-content-center no-gutters partMain ' style="display:none;">
+            <div id="partSurvey" class='col-12 partSurvey els-border els-card border col-sm-12 col-md-10 col-lg-8 col-xl-7 pl-2 pr-2 pt-2 pb-2'
+                 style="background-color:rgba(250, 250, 250, 0.85);">
+                <div id="partWelcome" class="row no-gutters partWelcome">
+                    <div class="col-12">
+                        <div class="text-center text-muted"><p>Your opinion is important to us.<br />We kindly ask you to take part in the review.</p></div>
+                    </div>
+                </div>
+                <div id="partQuestions" class="row no-gutters elsurv-questions p-0">
+                    <div class="col-12 px-4 ">
+                        <!-- ---------------- question1 ----------------------- -->
+                        <div class="row no-gutters elsurv-question elsurv-question-active align-items-center qr-border qr-border-round"
+                             data-questiontype="TXT" data-id="question1"
+                             data-ifand=""
+                             data-ifnotfix="">
+                            <div class='col-1 d-flex justify-content-center align-self-start p-0'>
+                                <div class="elsurv-question-no els-circle  els-animate1s">1</div>
+                            </div>
+                            <div class="col-11 text-muted">
+                                <span class="elsurv-question-answered float-right small font-weight-bold pl-3">
+                                    <span class="elsurv-question-answered-text small"></span>
+                                    <i class="elsurv-question-answered-check fa fa-check-square-o animated fadeInRight"></i>
+                                </span>
+                                <p class="elsurv-question-text text-corporate font-size-18 mb-0">
+                                    @Model.question1
+                                </p>
+                                <div class="row elsurv-question-answer d-flex justify-content-center els-animate1s animated fadeIn">
+                                    <div class="col-12">
+                                        <div class="row align-items-end">
+                                            <div class="elsurv-question-answer1 col">
+                                                <textarea class="form-control" rows="2"
+                                                          data-ispd="False"
+                                                          data-answertxt=@Model.question1
+                                                          data-answerval=""
+                                                          placeholder=''></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 pt-2 d-flex justify-content-center">
+                                        <button type="button" class="qr-btn qr-btn-filled pl-5 pr-5" onclick="clicktext('question1',this)">
+                                            <span>
+                                                Next
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row elsurv-question-skip text-right">
+                                    <div class="col pb-1">
+                                        <a class="btn-link pt-0 pb-0 font-size-12" href="#" onclick="clickbtn('question1',this,null,null)">
+                                            <span class="">
+                                                skip question &nbsp;<i class='fa fa-chevron-right'></i>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12"></div>
+                        </div>
+                        <!-- ---------------- question2 ----------------------- -->
+                        <div class="row no-gutters elsurv-question elsurv-question-active align-items-center qr-border qr-border-round"
+                             style=display:none!important;
+                             data-questiontype="TXT" data-id="question2"
+                             data-ifand=""
+                             data-ifnotfix="">
+                            <div class='col-1 d-flex justify-content-center align-self-start p-0'>
+                                <div class="elsurv-question-no els-circle  els-animate1s">2</div>
+                            </div>
+                            <div class="col-11 text-muted">
+                                <span class="elsurv-question-answered float-right small font-weight-bold pl-3">
+                                    <span class="elsurv-question-answered-text small"></span>
+                                    <i class="elsurv-question-answered-check fa fa-check-square-o animated fadeInRight"></i>
+                                </span>
+                                <p class="elsurv-question-text text-corporate font-size-18 mb-0">
+                                    @Model.question2
+                                </p>
+                                <div class="row elsurv-question-answer d-flex justify-content-center els-animate1s animated fadeIn">
+                                    <div class="col-12">
+                                        <div class="row align-items-end">
+                                            <div class="elsurv-question-answer1 col">
+                                                <textarea class="form-control" rows="2"
+                                                          data-ispd="False"
+                                                          data-answertxt=@Model.question2
+                                                          data-answerval=""
+                                                          placeholder=''></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 pt-2 d-flex justify-content-center">
+                                        <button type="button" class="qr-btn qr-btn-filled pl-5 pr-5" onclick="clicktext('question2',this)">
+                                            <span>
+                                                Next
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row elsurv-question-skip text-right">
+                                    <div class="col pb-1">
+                                        <a class="btn-link pt-0 pb-0 font-size-12" href="#" onclick="clickbtn('question2',this,null,null)">
+                                            <span class="">
+                                                skip question &nbsp;<i class='fa fa-chevron-right'></i>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12"></div>
+                        </div>
+                        <!-- ---------------- question3 ----------------------- -->
+                        <div class="row no-gutters elsurv-question elsurv-question-active align-items-center qr-border qr-border-round"
+                             style=display:none!important;
+                             data-questiontype="TXT" data-id="question3"
+                             data-ifand=""
+                             data-ifnotfix="">
+                            <div class='col-1 d-flex justify-content-center align-self-start p-0'>
+                                <div class="elsurv-question-no els-circle  els-animate1s">3</div>
+                            </div>
+                            <div class="col-11 text-muted">
+                                <span class="elsurv-question-answered float-right small font-weight-bold pl-3">
+                                    <span class="elsurv-question-answered-text small"></span>
+                                    <i class="elsurv-question-answered-check fa fa-check-square-o animated fadeInRight"></i>
+                                </span>
+                                <p class="elsurv-question-text text-corporate font-size-18 mb-0">
+                                    @Model.question3
+                                </p>
+                                <div class="row elsurv-question-answer d-flex justify-content-center els-animate1s animated fadeIn">
+                                    <div class="col-12">
+                                        <div class="row align-items-end">
+                                            <div class="elsurv-question-answer1 col">
+                                                <textarea class="form-control" rows="2"
+                                                          data-ispd="False"
+                                                          data-answertxt=@Model.question3
+                                                          data-answerval=""
+                                                          placeholder=''></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 pt-2 d-flex justify-content-center">
+                                        <button type="button" class="qr-btn qr-btn-filled pl-5 pr-5" onclick="clicktext('question3',this)">
+                                            <span>
+                                                Next
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="row elsurv-question-skip text-right">
+                                    <div class="col pb-1">
+                                        <a class="btn-link pt-0 pb-0 font-size-12" href="#" onclick="clickbtn('question3',this,null,null)">
+                                            <span class="">
+                                                skip question &nbsp;<i class='fa fa-chevron-right'></i>
+                                            </span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12"></div>
+                        </div>
+                    </div>
+                    <!-- ---------------- Sending answer ----------------------- -->
+                    <div id="partSend" class="partSend col-12 align-items-center animated fadeInDown" style="display:none;">
+                        <div class="row no-gutters">
+                            <div class="col-12">
+                                <i class="fa fa-spin fa-circle-o-notch"></i>
+                                <span>Sending your answers...</span>
+                                <div id="sendError" class="text-danger hide bg-light"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="partPostQuestions" class="row no-gutters partPostQuestionsRow p-0" style="display:none;">
+                </div>
+                <!-- ------------------Thank you -----------------------  -->
+                <div id="partThanks" class="row no-gutters partThanks" style="display: none;">
+                    <div class="col-12" style="display:none;" data-ifor="">
+                        <div class="row">
+                            <div class="col">
+                                <div class="text-center text-muted"><b>Thank you for paticipating!</b><hr /></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ------------------- Results ------------------------------------- -->
+    <div style="display:none;">
+        <form id="formPost" method="post" action="/Survey/SurveyIncomplete">
+            <input id="result" name="result" type="hidden" />
+            <input id="mobile" name="mobile" type="hidden" />
+            <input id="afterpost" name="afterpost" type="hidden" />
+            <input name="__RequestVerificationToken" type="hidden" value="CfDJ8IXTFTMhgdhPlbxT2vEOWflE312sRFvyuss3qgec4fwmE3u0jgYDsDT_fiQd2u0uT20DNDIIWOghQ621Lj1UF5k3kQO-6N1c4VCVMYbsUnEnXfNai5U2KjekrtgRIJotXyByOddT9R-YsnC7vbF4j50" />
+        </form>
+    </div>
+
+    <footer>
+        <div id="partFooter" class="partFooter nav fixed-bottom small"
+             style="padding-left: 10px; padding-right: 10px;background-color:#4a049c; color:whitesmoke; height:28px;">
+            <table width="100%" style="height:28px;">
+                <tr>
+                    <td class="p-0">
+                        <div class="d-flex justify-content-md-end justify-content-center pr-5">
+                            <div class="small" style="color:yellow"> ElSurv System &copy; 2023 </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </footer>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.5/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">var answers = [];
+        var hasPD = false;
+        var searches = {};
+        var inSend = false;
+        var nextUrl = "";
+        $(document).ready(function () {
+            if (window.location.search.length > 0) {
+                var p = window.location.search.substring(1).split('&');
+                for (var i = 0; i < p.length; i++) {
+                    var nm = p[i].split('=', 2);
+                    if (searches[decodeURI(nm[0])] != null) searches[decodeURI(nm[0])].push(decodeURI(nm[1] || ''));
+                    else searches[decodeURI(nm[0])] = [decodeURI(nm[1] || '')];
+                }
+                console.log(searches);
+            }
+
+            var no = 1;
+            var sq_first = null;
+            $(".elsurv-question").each(function (ix, val) {
+                if (sq_first === null) sq_first = val;
+                if ($(val).attr("data-autonumber") == "true" &&
+                    typeof $(val).attr("data-ifor") == "undefined") $(val).find(".elsurv-question-no").text(no++);
+            });
+
+            console.log($('[data-mask]'));
+            $('[data-mask]').each(function (ix, val) {
+                if (typeof $(val).attr("data-mask") != "undefined" && $(val).attr("data-mask") != '')
+                    $(val).mask($(val).attr("data-mask"));
+            });
+
+            $('#partLoader').hide();
+            $('#partMain').show();
+            setTimeout(valign(), 10);
+            window.addEventListener('resize', function () { valign() }, true);
+
+            // Подключение css для iframe бота
+            /*
+            setTimeout(()=>{
+                var cssLink = document.createElement("link");
+                cssLink.href = "~/css/bot.css";
+                cssLink.rel = "stylesheet";
+                cssLink.type = "text/css";
+                window.frames['#bp-web-widget-container'].document.head.appendChild(cssLink);
+            }, 2000);
+            */
+        });
+
+        function valign() {
+            var h = $(window).height();
+            var h2 = h - $('#partHeader').height() - $('#partFooter').height() - 20;
+            if (h2 > $('#partMain').height())
+                $('#partMain').css('margin-top', (h - $('#partHeader').height() - $('#partFooter').height() - $('#partMain').height() - 20) / 2 + 'px');
+            else $('#partMain').css('margin-top', '');
+            if (h < 150) { $('.partHeader').slideUp(); $('#partMain').css('margin-top', '0px'); $('#partContainer').css('margin-top', '0px'); }
+            else { $('.partHeader').slideDown(); $('#partContainer').css('margin-top', 90); }
+            if (h < 220) { $('.partFooter').slideUp(); $('#partContainer').css('margin-bottom', '10px'); }
+            else { $('.partFooter').slideDown(); $('#partContainer').css('margin-footer', 28); }
+        }
+
+        function resizeCanvas() {
+
+            var freeHeihgt = window.innerHeight - $('#partHeader').height() - $('#partFooter').height() - $('#partMain').height();
+            if (freeHeihgt < 70) {
+                $('#partHeader').hide();
+                $('#partFooter').hide();
+            }
+            else {
+                $('#partHeader').show();
+                $('#partFooter').show();
+            }
+            valign();
+        }
+
+        function showThanks() {
+            var parts = $('#partThanks').find("[data-ifor]");
+            if (parts == null || parts.length == 0)
+                $('#partThanksEmpty').show();
+            else {
+                var fnd = false;
+                for (var i = 0; i < parts.length && !fnd; i++) {
+                    var df = $(parts[i]).attr("data-ifor");
+                    if (df == null || df == "" || (typeof df == "undefined")) $(parts[i]).show();
+                    else {
+                        var d = JSON.parse(df);
+                        for (var j = 0; j < d.length && !fnd; j++)
+                            for (var k in d[j]) {
+                                //                               console.log('k=', k,' f[j][k]='+d[j][k]);
+                                if (ifanswerin(k, d[j][k])) {
+                                    $(parts[i]).show();
+                                    fnd = true;
+                                    //                                   console.log('find i='+i);
+                                }
+                            }
+                    }
+                }
+            }
+            $('#partThanks').show(400);
+            setTimeout(function () { valign() }, 10);
+        }
+
+        function send() {
+            var del = (inSend) ? 1000 : 1;
+            inSend = true;
+            let postq = false;
+            console.log('postq', postq);
+            console.log('send() start', answers, postq);
+            $('#partProgress').hide();
+            $('#result').val(JSON.stringify(answers));
+
+            setTimeout(
+                function () {
+                    console.log('send() post start')
+
+                    $('#partSend').show(400).attr("tabindex", -1).focus();
+                    /*mobileapp*/
+                    console.log('answers', $('#formPost').serialize());
+                    $.post(window.location.pathname + window.location.search, $('#formPost').serialize(),
+                        function (data, textStatus, jqXHR) {
+                            isSend = false;
+                            console.log('send complete()');
+                            $('#partQuestions').hide();
+                            $('#partMain').addClass("align-items-center").height("80vh");
+                            showThanks();
+                        }
+                    )
+                        .fail(
+                            function (error) {
+                                isSend = false;
+                                if (error.status === 400)
+                                    $('#sendError').text("Error: " + (error.responseJSON != null ? error.responseJSON.error : error.status)).show();
+                                else
+                                    $('#sendError').text("Error: " + error.status).show();
+                                setTimeout(function () {
+                                    $('#partQuestions').hide();
+                                    $('#partMain').addClass("align-items-center").height("80vh");
+                                    showThanks();
+                                }, 2000);
+                            }
+                        );
+
+                }, del);
+        };
+
+        function recalc(sqel, no) {
+            var nxt = $(sqel).nextAll(".elsurv-question");
+            nxt.each(function (ix, val) {
+                if ($(val).attr("data-autonumber") == "true" &&
+                    typeof $(val).attr("data-ifor") == "undefined") {
+                    $(val).find(".elsurv-question-no").text(++no);
+                }
+            })
+        };
+
+        function next(el, txt, nohide) {
+            var qo = $(el).parents('.elsurv-question').first();
+            var no = qo.find(".elsurv-question-no").text();
+            //            console.log(qo,'no=',no);
+            if (typeof $(qo).attr("data-hb") !== "undefined") sendhb();
+            if (txt != null) { qo.find('.elsurv-question-answered-text').first().html(txt); }
+            var qn = qo;
+            var fnd = false;
+            while (!fnd && qn.length != 0) {
+                qn = qn.nextAll(".elsurv-question").first();
+                if (typeof $(qn).attr("data-ifor") !== "undefined") {
+                    var d = JSON.parse($(qn).attr("data-ifor"));
+                    for (var i = 0; i < d.length && !fnd; i++)
+                        for (var k in d[i]) {
+                            if (ifanswerin(k, d[i][k])) {
+                                fnd = true;
+                                $(qn).find(".elsurv-question-no").text(++no);
+                                break;
+                            }
+                        }
+                }
+                else
+                    fnd = true;
+            }
+
+            recalc(qo, no);
+            qo.removeClass('elsurv-question-active').addClass('elsurv-question-complete');
+            qo.hide(400);
+            if (qn.length != 0) {
+                if (qn.attr("data-questiontype") == "PRIV" && !hasPD) {
+                    send();
+                }
+                else {
+                    if (typeof $(qn).attr("data-newbackground") !== "undefined")
+                        $('#backgroundUrl').attr("src", $(qn).attr("data-newbackground"));
+
+                    qn.show();
+                    qn.removeClass('elsurv-question-noactive').addClass('elsurv-question-active');
+                    qn.find('.elsurv-question-answer').first().show().attr("tabindex", -1);
+                    //qn.find('.elsurv-question-answer').first().show().attr("tabindex", -1).focus();
+
+
+                    qn.find('.elsurv-question-skip').first().show();
+                }
+            }
+            else {
+                send();
+            }
+            if (typeof nohide == "undefined") $('#partWelcome').hide();
+
+            var pb = $('#progress-bar');
+            pb.attr("aria-valuenow", no).width(Math.round(100 * no / 5) + "%");
+
+            setTimeout(function () { valign() }, 0);
+        }
+
+        function clickbtn(id, el, txt, val) {
+            answers.push('');
+            next(el, txt);
+        }
+
+        function clicktext(id, el) {
+            var qo = $(el).parents('.elsurv-question').first();
+            vala = '';
+            var wastext = false;
+            qo.find('.elsurv-question-answer1 textarea,.elsurv-question-answer1 input').each(function (ix, el) {
+                vala = $(el).val();
+                if ($(el).val() != null && $(el).val().trim() != "") wastext = true;
+            });
+            answers.push(vala);
+            next(el, wastext ? 'введен текст' : null);
+        }</script>
+
+</body>
+</html>
+
+<script src="https://cdn.botpress.cloud/webchat/v0/inject.js"></script>
+<script>window.botpressWebChat.init({
+        "botId": "6d9dd9ec-88be-4892-b686-61fb356097a8",
+        "hostUrl": "https://cdn.botpress.cloud/webchat/v0",
+        "messagingUrl": "https://messaging.botpress.cloud",
+        "clientId": "6d9dd9ec-88be-4892-b686-61fb356097a8",
+        "useSessionStorage": true,
+        "enableConversationDeletion": true,
+        "locale": "ru",
+        "stylesheet": "https://customerpulse.ru/css/bot.css"
+    });</script>

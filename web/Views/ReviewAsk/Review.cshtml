@@ -1,0 +1,50 @@
+﻿@model List<web.Db.Review>
+@{
+    ViewData["Title"] = "Доступные опросы";
+    int count = 1;
+}
+
+
+<h2>List of Reviews</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>
+                №
+            </th>
+            <th>
+                Включен
+            </th>
+            <th>
+                Ключ
+            </th>
+            <th colspan="2" class="text-center">
+                Действие
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var review in Model)
+        {
+            <tr>
+                <td>
+                    @count
+                </td>
+                <td>
+                    @(review.active ? "вкл": "выкл")
+                </td>
+                <td>
+                    @review.key
+                </td>
+                
+                <td>
+                    @Html.ActionLink("Пройти опрос", "Questions", new { id = @review.id })
+                </td>
+            </tr>
+            count++;
+        }
+    </tbody>
+</table>
+

@@ -1,0 +1,79 @@
+﻿@model List<web.Models.ReviewDto>
+@{
+    ViewData["Title"] = "Answers list";
+    int count = 1;
+}
+
+<div class="card">
+    <div class="card-header h4">Answers list</div>
+    <div class="card-body">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>
+                        №
+                    </th>
+                    <th>
+                        State
+                    </th>
+                    <th>
+                        Описание
+                    </th>
+                    <th>
+                        Ключ
+                    </th>
+                    <th>
+                        Company
+                    </th>
+                    <th>
+                        Вопрос 1/Вопрос 2/Вопрос 3
+                    </th>
+                    <th class="text-center">
+                        Действие
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var review in Model)
+                {
+                    <tr>
+                        <td>
+                            @count
+                        </td>
+                        <td>
+                            @(review.active == true ? "active" : "blocked")
+                        </td>
+                        <td>
+                            @review.description
+                        </td>
+                        <td>
+                            @review.key
+                        </td>
+                        <td>
+                            @review.companyName
+                        </td>
+                        <td>
+                            <div>
+                                <b>1:</b> @review.question1
+                            </div>
+                            <div>
+                                <b>2:</b> @review.question2
+                            </div>
+                            <div>
+                                <b>3:</b> @review.question3
+                            </div>
+                        </td>
+                        <td>
+                            @Html.ActionLink("Ответы", "Answers", new { id = @review.id})
+                        </td>                        
+                    </tr>
+                    count++;
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="card-footer">
+        &nbsp;
+    </div>
+</div>

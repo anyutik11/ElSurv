@@ -1,0 +1,32 @@
+﻿@model List<web.Db.Answer>
+@{
+    ViewData["Title"] = "User list";
+    int count = 1;
+}
+
+
+<h2>Answers</h2>
+
+<table class="table table-bordered">
+
+    <tbody>
+
+        @foreach (var answer in Model)
+        {
+            <tr>
+                <td>
+                    @count
+                </td>
+                <td>
+                    @answer.text2
+                </td>
+
+            </tr>
+            count++;
+        }
+    </tbody>
+</table>
+
+<div>
+    @Html.ActionLink("Back to List", "ListOfAllQuestions")
+</div>

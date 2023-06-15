@@ -1,0 +1,59 @@
+﻿@model web.Models.AnswersDto;
+@{    
+    ViewData["Title"] = "Review's answers";    
+}
+
+<h2>Review's answers</h2>
+
+@for (int i=0; i<3; i++)
+{
+    <div class="card">
+        <div class="card-header grid">
+            <div class="row">
+                <div class="col-10 h4">
+                    @(i + 1): @(i == 0 ? @Model.review.question1 : i == 1 ? Model.review.question2 : @Model.review.question3)
+                </div>
+                <div class="col-2 d-flex justify-content-end">
+                    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target='@("#collapseExample" + i.ToString())' aria-expanded="false" aria-controls="collapseExample">
+                        +/-
+                    </button>
+                </div>
+            </div>
+        </div>            
+        <div class="card-body">
+            <div class="collapse" id='@("collapseExample" + i.ToString())'>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>
+                            №
+                        </th>                        
+                        <th>
+                            Ответ
+                        </th>                        
+                    </tr>
+                </thead>
+                <tbody>
+                    @{int count = 1;}
+                    @foreach (var answer in Model.answers)
+                    {
+                        <tr>
+                            <td>
+                                @count
+                            </td>
+                            <td>
+                                    @(i == 0 ? answer.text1 : i == 1 ? answer.text2 : answer.text3)
+                            </td>                            
+                        </tr>
+                        count++;
+                    }
+                </tbody>
+            </table>
+            </div>
+        </div>
+        <div class="card-footer">
+            &nbsp;
+        </div>
+    </div>
+    
+}

@@ -1,0 +1,27 @@
+name: elsurv_mobile
+description: ElSurv System Mobile Client
+publish_to: 'none'
+version: 0.1.0+1
+
+environment:
+  sdk: '>=2.19.6 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_fonts: ^3.0.1
+  cupertino_icons: ^1.0.5
+  json_annotation: ^4.6.0
+  http: ^0.13.4
+  webview_flutter: ^4.2.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter  
+  flutter_lints: ^2.0.1
+  
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+  
